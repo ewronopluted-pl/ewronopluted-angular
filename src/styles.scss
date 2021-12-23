@@ -1,0 +1,15 @@
+/* You can add global styles to this file, and also import other style files */
+html{
+    margin: 0;
+    overflow-x: hidden;
+}
+html, body {scroll-behavior: smooth; min-height: 100%; }
+body { margin: 0; font-family: 'sourceSerif'; }
+body { margin: 0; font-family: 'sourceSerif'; }
+.grecaptcha-badge { visibility: hidden; }
+
+
+@font-face {
+    font-family: sourceSerif;
+    src: url("assets/SourceSerif4-VariableFont_opsz\,wght.ttf") format("opentype");
+  }

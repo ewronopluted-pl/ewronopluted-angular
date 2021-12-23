@@ -1,0 +1,16 @@
+.content{
+    width: 100%;
+    height: 75px;
+    background-color: rgb(97, 97, 97);
+    display: grid;
+    grid-template-columns: 1fr 100fr;
+
+    img{
+        margin: 9px;
+    }
+
+    .p-input-icon-left{
+        width: 400px;
+        margin: auto;
+    }
+}

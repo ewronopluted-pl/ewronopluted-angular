@@ -1,0 +1,60 @@
+<div class="content">
+    <h1>Czy {{channel}} opluł! <img src="/assets/img.png" alt=""></h1>
+    <h3>All time: {{getPrecent()}}</h3>
+    <h3>Wczoraj: {{getPrecentByDay()}}</h3>
+
+    <div class="legend">
+        <div class="leg-block oplute">Oplute</div>
+        <div class="leg-block nieoplute">Nie oplute(min. 3 użytkowników)</div>
+        <div class="leg-block przed">Poza streamem</div>
+        <div class="leg-block info">Zarchiwizowane<br>(30h po streamie)</div>
+    </div>
+    <p>Odświerzenie danych za: {{this.nextLoading}}</p>
+    <p-table [value]="data" [paginator]="true" [rows]="25" [globalFilterFields]="['date','user','type']" dataKey="id" styleClass="p-datatable-lg">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Typ</th>
+                <th>Data <p-columnFilter type="date" field="date" display="menu"></p-columnFilter></th>
+                <th pSortableColumn="uptime">Uptime <p-sortIcon field="uptime"></p-sortIcon></th>
+                <th>Kto</th>
+                <th>Wartość</th>
+                <th>Wiadomość</th>
+                <th></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-info>
+            <tr [ngClass]="isTrue(info)">
+                <td>{{info.type}}</td>
+                <td>{{info.date | date: 'dd/MM/yyyy'}}</td>
+                <td>{{uptimeCalc(info.uptime)}}</td>
+                <td>{{info.user}}</td>
+                <td>{{returnInfo(info)}}</td>
+                <td>{{info.message}}</td>
+                <td>
+                    <div *ngIf="info.uptime == 0 && !archive(info)">Wysłane poza streamem</div>
+                    <!--<button pButton pRipple label="User" icon="pi pi-user" class="p-button-text" (click)="incrementUser(info.id)"></button>-->
+                    <div *ngIf="archive(info)">Zarchiwizowane - 
+                        <span *ngIf="info.uptime == 0">Wysłane poza streamem</span> 
+                        <span *ngIf="(info.moderatorAccepted == 0 && 2 > info.userAccepted)&& info.uptime != 0 && isCheer(info)">oplute</span> 
+                        <span *ngIf="!((info.moderatorAccepted == 0 && 2 > info.userAccepted)&& info.uptime != 0) && isCheer(info)">nie oplute</span> 
+                        <span *ngIf="!isCheer(info)">za mało cheer-ów</span> 
+                    </div>
+                    <div *ngIf="!isCheer(info)">za mało cheer-ów</div> 
+                    <button  *ngIf="((info.moderatorAccepted == 0 && 2 > info.userAccepted)&& info.uptime != 0 && isCheer(info)) && !archive(info)" pButton pRipple type="button" label="Nie oplute" class="p-button-raised p-button-success p-button-text" (click)="incrementUser(info.id)"></button>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+            <tr>
+                <td colspan="9">No info found.</td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+
+<p-toast></p-toast>
+<p-dialog header="Moderator" [(visible)]="display">
+    potwierdź że masz dostęp do tej funckji!<br>
+    token: <input type="text" pInputText [(ngModel)]="token">
+    <button pButton pRipple label="zapisz" icon="pi pi-user" class="p-button-text" (click)="incrementUser(2)"></button>
+</p-dialog>
