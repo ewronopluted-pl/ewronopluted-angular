@@ -12,4 +12,5 @@ export class InfoModel {
     public userAccepted?: number;
     public moderatorAccepted?: number;
     public uptime?: number;
+    public video?: string;
 }    
