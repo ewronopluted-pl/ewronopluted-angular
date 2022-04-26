@@ -1,0 +1,7 @@
+{
+  "name": "EwroonOpluted",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}

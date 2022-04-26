@@ -4,6 +4,7 @@ import { DbconnectService } from 'src/app/core/service';
 import { InfoModel } from 'src/app/core/model/info.model';
 import { MessageService, FilterService } from 'primeng/api';
 import { DatePipe } from '@angular/common';
+import * as twitchEmotes from "twitch-emoji";
 
 @Component({
   selector: 'app-main',
@@ -28,7 +29,6 @@ export class MainComponent implements OnInit {
     this.channel = this.route.url.substring(1);
     this.channel == "" ? this.channel = "ewroon": "";
     await this.loadData()
-    console.log(this.route.url)
 
     this.route.events.subscribe(async (val: any)=>{
       if(val instanceof NavigationEnd){
@@ -73,6 +73,7 @@ export class MainComponent implements OnInit {
         video: value.video
       }
       items.push(item);
+      console.log(twitchEmotes.parse(value.message));
     }
 
     this.data = items;
